@@ -1,0 +1,57 @@
+.navbar.navbar-inverse.navbar-fixed-top
+  .navbar-inner
+    .container-fluid
+      %a.btn.btn-navbar{"data-target" => ".nav-collapse", "data-toggle" => "collapse"}
+        %span.icon-bar
+        %span.icon-bar
+        %span.icon-bar
+      .nav-collapse
+        - if session[:usuario]
+          %ul.nav
+            %li
+            %li= link_to 'Inicio', root_path, :class => 'brand'
+            %li.divider-vertical
+            %li.dropdown
+              %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
+                Informe Web
+                %b.caret
+              %ul.dropdown-menu
+                %li= link_to 'Lista de Informes', informes_path
+                %li= link_to 'Compilar Nuevo Informe', paso1_informes_path
+                %li= link_to 'Barrer Sitios Web', :action => 'paso1', :controller => 'wizard'
+                %li= link_to 'Crear Notas', new_nota_path
+            %li.dropdown
+              %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
+                Componentes
+                %b.caret
+              %ul.dropdown-menu
+                %li= link_to 'Websites', websites_path
+                %li= link_to 'Notas', notas_path
+            %li.dropdown
+              %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
+                Asuntos y Temas
+                %b.caret
+              %ul.dropdown-menu
+                %li= link_to 'Temas', temas_path
+                %li= link_to 'Asunto', asuntos_path
+            %li.dropdown
+              %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
+                Alertas
+                %b.caret
+              %ul.dropdown-menu
+                %li= link_to 'Lista de Alertas', alertas_path
+                %li= link_to 'Nueva Alerta', new_alerta_path
+          .pull-right{:style => "padding-top:10px;"}
+            %p.mute
+              = session[:usuario].nombre
+              \/
+              \#{link_to "Cerrar Sesión", :controller => "home", :action=> "cerrar_sesion"}
+        - else
+          %ul.nav.row
+            %li
+          .pull-right{:style => "padding-top:8px;"}
+%script{:charset => "utf-8", :type => "text/javascript"}
+  :cdata
+    $(document).ready(function() {
+    $('.dropdown-toggle').dropdown()
+    });
