@@ -1,3 +1,21 @@
-%nav.navbar.navbar-light.bg-light
-  %a.navbar-brand{:href => "#"}
-    = image_tag 'logo_alt01', :title => "logo", :class => "d-inline-block.align-top", :style => 'width: 30px; height:30px;'
+
+= nav_bar static: :top, brand: "Edumas", responsive: true do
+  = menu_group do
+    = menu_item "Home", root_path
+    = menu_divider
+    = drop_down "Products" do
+      = menu_item "Things you can't afford", activity_types_path
+      = menu_item "Things that won't suit you anyway", activity_types_path
+      = menu_item "Things you're not even cool enough to buy anyway", activity_types_path
+      - if false #current_user.lives_in_hackney?
+        = menu_item "Bikes", '#' #fixed_wheel_bikes_path
+    = menu_item "About Us", '#' #about_us_path
+    = menu_item "Contact", '#' #contact_path
+  = menu_group pull: :right do
+    - if true #current_user
+      = menu_item "Log Out", '#' #log_out_path
+    - else
+      = form_for @user, url: session_path(:user), html => {class: "navbar-form pull-right"} do |f|
+        %p= f.text_field :email
+        %p= f.password_field :password
+        %p= f.submit "Sign in"
